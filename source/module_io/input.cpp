@@ -3844,14 +3844,13 @@ void Input::Check(void)
     }
     else if (basis_type == "lcao")
     {
-        if (ks_solver == "cg_in_lcao")
+        if (ks_solver == "cg")
         {
-            // ModuleBase::WARNING_QUIT("Input", "not ready for cg method in lcao ."); // xiaohui add 2013-09-04
-#ifdef __MPI
+            ModuleBase::WARNING_QUIT("Input", "not ready for cg method in lcao ."); // xiaohui add 2013-09-04
+        }
+        else if (ks_solver == "cg_in_lcao")
+        {
             GlobalV::ofs_warning << "cg_in_lcao is under testing" << std::endl;
-#else
-            ModuleBase::WARNING_QUIT("Input", "cg_in_lcao can not be used for series version.");
-#endif
         }
         else if (ks_solver == "genelpa")
         {
