@@ -11,7 +11,6 @@
 #define DIAGODAVID_H
 
 #include "diagh.h"
-#include "module_base/complexmatrix.h"
 #include "module_base/macros.h"
 #include "module_hamilt_pw/hamilt_pwdft/structure_factor.h"
 #include "module_psi/kernels/device.h"
@@ -19,12 +18,12 @@
 namespace hsolver
 {
 
-template <typename T = std::complex<double>, typename Device = psi::DEVICE_CPU> 
+template <typename T = std::complex<double>, typename Device = psi::DEVICE_CPU>
 class DiagoDavid : public DiagH<T, Device>
 {
   private:
-    // Note GetTypeReal<T>::type will 
-    // return T if T is real type(float, double), 
+    // Note GetTypeReal<T>::type will
+    // return T if T is real type(float, double),
     // otherwise return the real type of T(complex<float>, complex<double>)
     using Real = typename GetTypeReal<T>::type;
   public:
