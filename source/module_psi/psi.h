@@ -3,6 +3,7 @@
 
 #include "module_base/module_device/memory_op.h"
 #include "module_base/module_device/types.h"
+#include "module_parameter/parameter.h"
 
 #include <tuple>
 #include <vector>
@@ -134,7 +135,17 @@ class Psi
 
     const int& get_current_ngk() const;
 
-    const int& get_npol() const {return this->npol;}
+    const int& get_npol() const 
+    {
+        if (PARAM.inp.nspin == 4)
+        {
+            return 2;
+        }
+        else
+        {
+            return 1;
+        }
+    }
 
     // solve Range: return(pointer of begin, number of bands or k-points)
     std::tuple<const T*, int> to_range(const Range& range) const;
@@ -143,27 +154,22 @@ class Psi
     T* psi = nullptr; // avoid using C++ STL
 
     Device* ctx = {}; // an context identifier for obtaining the device variable
-    int npol = 1;
+    bool allocate_inside = true; ///< whether allocate psi inside Psi class
+    bool k_first = true;
+
+    const int* ngk = nullptr;
 
     // dimensions
     int nk = 1;     // number of k points
     int nbands = 1; // number of bands
     int nbasis = 1; // number of basis
 
+    // mutable values
     mutable int current_k = 0;      // current k point
     mutable int current_b = 0;      // current band index
     mutable int current_nbasis = 1; // current number of basis of current_k
-
-    // current pointer for getting the psi
-    mutable T* psi_current = nullptr;
-    // psi_current = psi + psi_bias;
-    mutable int psi_bias = 0;
-
-    const int* ngk = nullptr;
-
-    bool k_first = true;
-
-    bool allocate_inside = true; ///< whether allocate psi inside Psi class
+    mutable T* psi_current = nullptr; // current pointer for getting the psi
+    mutable int psi_bias = 0; // psi_current = psi + psi_bias;
 
 #ifdef __DSP
     using delete_memory_op = base_device::memory::delete_memory_op_mt<T, Device>;
