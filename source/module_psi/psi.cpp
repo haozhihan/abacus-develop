@@ -478,6 +478,19 @@ int Psi<T, Device>::get_current_nbas() const
 }
 
 template <typename T, typename Device>
+const int& Psi<T, Device>::get_npol() const 
+{
+    if (PARAM.inp.nspin == 4)
+    {
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+template <typename T, typename Device>
 const int& Psi<T, Device>::get_ngk(const int ik_in) const
 {
     assert(this->ngk != nullptr);

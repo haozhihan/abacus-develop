@@ -3,7 +3,6 @@
 
 #include "module_base/module_device/memory_op.h"
 #include "module_base/module_device/types.h"
-#include "module_parameter/parameter.h"
 
 #include <tuple>
 #include <vector>
@@ -135,17 +134,7 @@ class Psi
 
     const int& get_current_ngk() const;
 
-    const int& get_npol() const 
-    {
-        if (PARAM.inp.nspin == 4)
-        {
-            return 2;
-        }
-        else
-        {
-            return 1;
-        }
-    }
+    const int& get_npol() const;
 
     // solve Range: return(pointer of begin, number of bands or k-points)
     std::tuple<const T*, int> to_range(const Range& range) const;
