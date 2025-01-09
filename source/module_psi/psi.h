@@ -134,15 +134,16 @@ class Psi
 
     const int& get_current_ngk() const;
 
+    const int& get_npol() const {return this->npol;}
+
     // solve Range: return(pointer of begin, number of bands or k-points)
     std::tuple<const T*, int> to_range(const Range& range) const;
-
-    int npol = 1;
 
   private:
     T* psi = nullptr; // avoid using C++ STL
 
     Device* ctx = {}; // an context identifier for obtaining the device variable
+    int npol = 1;
 
     // dimensions
     int nk = 1;     // number of k points

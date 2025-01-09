@@ -191,7 +191,7 @@ template <typename T, typename Device>
 Psi<T, Device>::Psi(const Psi& psi_in)
 {
     this->ngk = psi_in.ngk;
-    this->npol = psi_in.npol;
+    this->npol = PARAM.globalv.npol;
     this->nk = psi_in.get_nk();
     this->nbands = psi_in.get_nbands();
     this->nbasis = psi_in.get_nbasis();
@@ -218,7 +218,7 @@ template <typename T_in, typename Device_in>
 Psi<T, Device>::Psi(const Psi<T_in, Device_in>& psi_in)
 {
     this->ngk = psi_in.get_ngk_pointer();
-    this->npol = psi_in.npol;
+    this->npol = PARAM.globalv.npol;
     this->nk = psi_in.get_nk();
     this->nbands = psi_in.get_nbands();
     this->nbasis = psi_in.get_nbasis();
