@@ -32,7 +32,6 @@ Range::Range(const bool k_first_in, const size_t index_1_in, const size_t range_
 template <typename T, typename Device>
 Psi<T, Device>::Psi()
 {
-    this->npol = PARAM.globalv.npol;
 }
 
 template <typename T, typename Device>
@@ -53,7 +52,6 @@ Psi<T, Device>::Psi(const int nk_in, const int nbd_in, const int nbs_in, const i
     assert(nbs_in > 0);
 
     this->k_first = k_first_in;
-    this->npol = PARAM.globalv.npol;
     this->allocate_inside = true;
 
     this->ngk = ngk_in; // modify later
@@ -91,7 +89,6 @@ Psi<T, Device>::Psi(const int nk_in,
     assert(nbs_in > 0);
 
     this->k_first = k_first_in;
-    this->npol = PARAM.globalv.npol;
     this->allocate_inside = true;
 
     this->ngk = ngk_in.data(); // modify later
@@ -129,7 +126,6 @@ Psi<T, Device>::Psi(T* psi_pointer,
     // assert(nk_in == 1); // NOTE because lr/utils/lr_uril.hpp func & get_psi_spin func
 
     this->k_first = k_first_in;
-    this->npol = PARAM.globalv.npol;
     this->allocate_inside = false;
 
     this->ngk = nullptr;
@@ -161,7 +157,6 @@ Psi<T, Device>::Psi(const int nk_in,
     assert(nk_in == 1);
 
     this->k_first = k_first_in;
-    this->npol = PARAM.globalv.npol;
     this->allocate_inside = true;
 
     this->ngk = nullptr;
@@ -191,7 +186,6 @@ template <typename T, typename Device>
 Psi<T, Device>::Psi(const Psi& psi_in)
 {
     this->ngk = psi_in.ngk;
-    this->npol = PARAM.globalv.npol;
     this->nk = psi_in.get_nk();
     this->nbands = psi_in.get_nbands();
     this->nbasis = psi_in.get_nbasis();
@@ -218,7 +212,6 @@ template <typename T_in, typename Device_in>
 Psi<T, Device>::Psi(const Psi<T_in, Device_in>& psi_in)
 {
     this->ngk = psi_in.get_ngk_pointer();
-    this->npol = PARAM.globalv.npol;
     this->nk = psi_in.get_nk();
     this->nbands = psi_in.get_nbands();
     this->nbasis = psi_in.get_nbasis();
@@ -331,13 +324,26 @@ const int& Psi<T, Device>::get_psi_bias() const
 template <typename T, typename Device>
 const int& Psi<T, Device>::get_current_ngk() const
 {
-    if (this->npol == 1)
+    if (this->get_npol() == 1)
     {
         return this->current_nbasis;
     }
     else
     {
         return this->nbasis;
+    }
+}
+
+template <typename T, typename Device>
+const int& Psi<T, Device>::get_npol() const 
+{ 
+    if (PARAM.inp.nspin == 4)
+    {
+        return 2;
+    }
+    else
+    {
+        return 1;
     }
 }
 
@@ -519,13 +525,13 @@ std::tuple<const T*, int> Psi<T, Device>::to_range(const Range& range) const
     else if (i1 < 0) // [r1, r2] is the range of index1 with length m
     {
         const T* p = &this->psi[r1 * (k_first ? this->nbands : this->nk) * this->nbasis];
-        int m = (r2 - r1 + 1) * this->npol;
+        int m = (r2 - r1 + 1) * this->get_npol();
         return std::tuple<const T*, int>(p, m);
     }
     else // [r1, r2] is the range of index2 with length m
     {
         const T* p = &this->psi[(i1 * (k_first ? this->nbands : this->nk) + r1) * this->nbasis];
-        int m = (r2 - r1 + 1) * this->npol;
+        int m = (r2 - r1 + 1) * this->get_npol();
         return std::tuple<const T*, int>(p, m);
     }
 }

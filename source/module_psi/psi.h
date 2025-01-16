@@ -138,12 +138,10 @@ class Psi
     std::tuple<const T*, int> to_range(const Range& range) const;
 
 
-    const int& get_npol() const { return this->npol;}
+    const int& get_npol() const;
 
   private:
     T* psi = nullptr; // avoid using C++ STL
-
-    int npol = 1;
 
     Device* ctx = {}; // an context identifier for obtaining the device variable
 
