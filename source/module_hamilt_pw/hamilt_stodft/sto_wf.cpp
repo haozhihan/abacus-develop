@@ -284,7 +284,7 @@ void Stochastic_WF<T, Device>::init_com_orbitals()
     Device* ctx = {};
     if (base_device::get_device_type<Device>(ctx) == base_device::GpuDevice)
     {
-        this->chi0 = new psi::Psi<T, Device>(nks, this->nchip_max, npwx, this->ngk, ture);
+        this->chi0 = new psi::Psi<T, Device>(nks, this->nchip_max, npwx, this->ngk, true);
     }
     else
     {
