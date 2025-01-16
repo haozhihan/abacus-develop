@@ -252,7 +252,7 @@ void spinconstrain::SpinConstrain<std::complex<double>>::cal_mw_from_lambda(int 
                 hamilt::Hamilt<std::complex<double>, base_device::DEVICE_GPU>* hamilt_t = static_cast<hamilt::Hamilt<std::complex<double>, base_device::DEVICE_GPU>*>(this->p_hamilt);
                 auto* onsite_p = projectors::OnsiteProjector<double, base_device::DEVICE_GPU>::get_instance();
                 nbands = psi_t->get_nbands();
-                npol = psi_t->npol;
+                npol = psi_t->get_npol();
                 nkb = onsite_p->get_tot_nproj();
                 nk = psi_t->get_nk();
                 nh_iat = &onsite_p->get_nh(0);
@@ -454,7 +454,7 @@ void spinconstrain::SpinConstrain<std::complex<double>>::update_psi_charge(const
             hamilt::Hamilt<std::complex<double>, base_device::DEVICE_GPU>* hamilt_t = static_cast<hamilt::Hamilt<std::complex<double>, base_device::DEVICE_GPU>*>(this->p_hamilt);
             auto* onsite_p = projectors::OnsiteProjector<double, base_device::DEVICE_GPU>::get_instance();
             nbands = psi_t->get_nbands();
-            npol = psi_t->npol;
+            npol = psi_t->get_npol();
             nkb = onsite_p->get_tot_nproj();
             nk = psi_t->get_nk();
             nh_iat = &onsite_p->get_nh(0);
