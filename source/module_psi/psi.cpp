@@ -85,7 +85,7 @@ Psi<T, Device>::Psi(const int nk_in,
                     const bool k_first_in)
 {
     assert(nk_in > 0);
-    assert(nbd_in > 0);
+    assert(nbd_in >= 0);
     assert(nbs_in > 0);
 
     this->k_first = k_first_in;
