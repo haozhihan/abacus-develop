@@ -32,7 +32,6 @@ Range::Range(const bool k_first_in, const size_t index_1_in, const size_t range_
 template <typename T, typename Device>
 Psi<T, Device>::Psi()
 {
-    this->npol = this->get_npol();
 }
 
 template <typename T, typename Device>
@@ -51,8 +50,6 @@ Psi<T, Device>::Psi(const int nk_in, const int nbd_in, const int nbs_in, const i
     assert(nk_in > 0);
     assert(nbd_in >= 0); // 187_PW_SDFT_ALL_GPU && 187_PW_MD_SDFT_ALL_GPU
     assert(nbs_in > 0);
-
-    this->npol = this->get_npol();
 
     this->k_first = k_first_in;
     this->allocate_inside = true;
@@ -91,9 +88,6 @@ Psi<T, Device>::Psi(const int nk_in,
     assert(nbd_in > 0);
     assert(nbs_in > 0);
 
-
-    this->npol = this->get_npol();
-
     this->k_first = k_first_in;
     this->allocate_inside = true;
 
@@ -131,9 +125,6 @@ Psi<T, Device>::Psi(T* psi_pointer,
     // Currently this function only supports nk_in == 1 when called within diagH_subspace_init.
     // assert(nk_in == 1); // NOTE because lr/utils/lr_uril.hpp func & get_psi_spin func
 
-
-    this->npol = this->get_npol();
-
     this->k_first = k_first_in;
     this->allocate_inside = false;
 
@@ -165,8 +156,6 @@ Psi<T, Device>::Psi(const int nk_in,
     // Currently this function only supports nk_in == 1 when called within diagH_subspace_init.
     assert(nk_in == 1);
 
-    this->npol = this->get_npol();
-
     this->k_first = k_first_in;
     this->allocate_inside = true;
 
@@ -196,7 +185,6 @@ Psi<T, Device>::Psi(const int nk_in,
 template <typename T, typename Device>
 Psi<T, Device>::Psi(const Psi& psi_in)
 {
-    this->npol = this->get_npol();
 
     this->ngk = psi_in.ngk;
     this->nk = psi_in.get_nk();
@@ -224,8 +212,6 @@ template <typename T, typename Device>
 template <typename T_in, typename Device_in>
 Psi<T, Device>::Psi(const Psi<T_in, Device_in>& psi_in)
 {
-
-    this->npol = this->get_npol();
 
     this->ngk = psi_in.get_ngk_pointer();
     this->nk = psi_in.get_nk();
@@ -351,7 +337,7 @@ const int& Psi<T, Device>::get_current_ngk() const
 }
 
 template <typename T, typename Device>
-const int& Psi<T, Device>::get_npol() const 
+const int Psi<T, Device>::get_npol() const 
 { 
     if (PARAM.inp.nspin == 4)
     {
