@@ -154,7 +154,7 @@ Psi<T, Device>::Psi(const int nk_in,
                     const bool k_first_in)
 {
     // Currently this function only supports nk_in == 1 when called within diagH_subspace_init.
-    assert(nk_in == 1);
+    // assert(nk_in == 1);
 
     this->k_first = k_first_in;
     this->allocate_inside = true;
