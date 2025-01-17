@@ -43,40 +43,7 @@ Psi<T, Device>::~Psi()
     }
 }
 
-// // Constructor 1-1:
-// template <typename T, typename Device>
-// Psi<T, Device>::Psi(const int nk_in, const int nbd_in, const int nbs_in, const int* ngk_in, const bool k_first_in)
-// {
-//     assert(nk_in > 0);
-//     assert(nbd_in >= 0); // 187_PW_SDFT_ALL_GPU && 187_PW_MD_SDFT_ALL_GPU
-//     assert(nbs_in > 0);
-
-//     this->k_first = k_first_in;
-//     this->allocate_inside = true;
-
-//     this->ngk = ngk_in; // modify later
-//     // This function will delete the psi array first(if psi exist), then malloc a new memory for it.
-//     resize_memory_op()(this->ctx, this->psi, nk_in * static_cast<std::size_t>(nbd_in) * nbs_in, "no_record");
-
-//     this->nk = nk_in;
-//     this->nbands = nbd_in;
-//     this->nbasis = nbs_in;
-    
-//     this->current_b = 0;
-//     this->current_k = 0;
-//     this->current_nbasis = nbs_in;
-//     this->psi_current = this->psi;
-//     this->psi_bias = 0;
-
-//     // Currently only GPU's implementation is supported for device recording!
-//     base_device::information::print_device_info<Device>(this->ctx, GlobalV::ofs_device);
-//     base_device::information::record_device_memory<Device>(this->ctx,
-//                                                            GlobalV::ofs_device,
-//                                                            "Psi->resize()",
-//                                                            sizeof(T) * nk_in * nbd_in * nbs_in);
-// }
-
-// Constructor 1-2:
+// Constructor 1:
 template <typename T, typename Device>
 Psi<T, Device>::Psi(const int nk_in,
                     const int nbd_in,
